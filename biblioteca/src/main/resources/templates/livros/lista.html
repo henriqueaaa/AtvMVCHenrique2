@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Livros</title>
+</head>
+<body>
+<h1>Livros</h1>
+
+<form th:action="@{/livros/adicionar}" method="post">
+    <input type="text" name="titulo" placeholder="Título" required>
+    <input type="text" name="autor" placeholder="Autor" required>
+    <input type="text" name="isbn" placeholder="ISBN" required>
+    <button type="submit">Adicionar</button>
+</form>
+
+<table border="1" cellpadding="6">
+    <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>ISBN</th>
+        <th></th>
+    </tr>
+    <tr th:each="livro, estado : ${livros}">
+        <td th:text="${livro.titulo}"></td>
+        <td th:text="${livro.autor}"></td>
+        <td th:text="${livro.isbn}"></td>
+        <td>
+            <form th:action="@{/livros/remover/{i}(i=${estado.index})}" method="post">
+                <button type="submit">Remover</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<p th:if="${livros.isEmpty()}">Nenhum livro cadastrado.</p>
+<a th:href="@{/livros}">Voltar</a>
+</body>
+</html>
